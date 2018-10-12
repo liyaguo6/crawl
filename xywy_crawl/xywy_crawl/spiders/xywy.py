@@ -3,7 +3,8 @@ import scrapy
 from scrapy.http import Request
 from scrapy.selector import HtmlXPathSelector,Selector
 from scrapy.http.cookies import CookieJar
-
+from bs4 import BeautifulSoup
+from ..items import XywyCrawlItem
 
 class XywySpider(scrapy.Spider):
     name = "xywy"
@@ -40,5 +41,11 @@ class XywySpider(scrapy.Spider):
 
     def parse2(self, response):
         hxs = Selector(response=response)
-        answer = hxs.xpath('//div[@class="clearfix pl29 pr15"]//p[@class="fl dib fb"]/text()').extract_first()
-        print(answer)
+        first_question = hxs.xpath('//div[@class="clearfix pl29 pr15"]//p[@class="fl dib fb"]/text()').extract_first()
+        answer_list= hxs.xpath('//div[@class="pt15 f14 graydeep  pl20 pr20 deepblue"]').extract()
+        question_list = hxs.xpath('//div[@class="relate-ques"]/span/text()').extract()
+        answer = ",".join(answer_list)
+        soup = BeautifulSoup(answer, features="lxml")
+        answer_text = soup.find('div').get_text()
+        keywords= hxs.xpath('//div[@class="w980 clearfix bc f12 btn-a pr"]/p[@class="pt10 pb10 lh180 znblue normal-a"]/a/text()').extract()[-2:]
+        yield XywyCrawlItem(answer=answer_text,question=first_question,same_question=question_list,keywords=keywords)

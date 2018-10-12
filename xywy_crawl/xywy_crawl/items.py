@@ -11,4 +11,7 @@ import scrapy
 class XywyCrawlItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    question = scrapy.Field()
+    answer = scrapy.Field( )
+    same_question = scrapy.Field()
+    keywords = scrapy.Field()
