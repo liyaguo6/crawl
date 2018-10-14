@@ -46,9 +46,10 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'xywy_crawl.middlewares.XywyCrawlSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+   # 'xywy_crawl.middlewares.XywyCrawlSpiderMiddleware': 543,
+   'xywy_crawl.middlewares.DownMiddleware1': 300,
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
@@ -56,17 +57,17 @@ ROBOTSTXT_OBEY = False
 #    'xywy_crawl.middlewares.MyCustomDownloaderMiddleware': 543,
 #}
 
-# Enable or disable extensions
+# Enable or disable extensions 自定义扩展，基于信号进行调用
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
+# EXTENSIONS = {
+#    'xywy_crawl.extensions.MyExtension': 300,
+# }
 
-# Configure item pipelines
+# Configure item pipelines  定义pipeline处理请求
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'xywy_crawl.pipelines.XywyCrawlPipeline': 300,
-}
+# ITEM_PIPELINES = {
+#    'xywy_crawl.pipelines.XywyCrawlPipeline': 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,3 +89,8 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+
+
+# DUPEFILTER_CLASS = 'xywy_crawl.rep.RepeatUrl'  #自定义去重规则

@@ -5,6 +5,7 @@ from scrapy.selector import HtmlXPathSelector,Selector
 from scrapy.http.cookies import CookieJar
 from bs4 import BeautifulSoup
 from ..items import XywyCrawlItem
+from scrapy.dupefilters import RFPDupeFilter
 
 class XywySpider(scrapy.Spider):
     name = "xywy"
@@ -15,7 +16,7 @@ class XywySpider(scrapy.Spider):
 
     def start_requests(self):
         for url in self.start_urls:
-            print(url)
+            # print(url)
             yield Request(url=url,dont_filter=True,callback=self.parse1)
 
     def parse1(self, response):
@@ -33,11 +34,11 @@ class XywySpider(scrapy.Spider):
                 callback=self.parse2,
                 dont_filter=True,
             )
-        url_page = hxs.xpath('//div[@class="bore4 pt10"]//a[@target="_self"]/@href').extract()
-        for url in url_page:
-            if url not in self.page_url_list:
-                self.page_url_list.append(url)
-                yield Request(url="http://club.xywy.com%s"%(url), dont_filter=True, callback=self.parse1)
+        # url_page = hxs.xpath('//div[@class="bore4 pt10"]//a[@target="_self"]/@href').extract()
+        # for url in url_page:
+        #     if url not in self.page_url_list:
+        #         self.page_url_list.append(url)
+        #         yield Request(url="http://club.xywy.com%s"%(url), dont_filter=True, callback=self.parse1)
 
     def parse2(self, response):
         hxs = Selector(response=response)
@@ -48,4 +49,5 @@ class XywySpider(scrapy.Spider):
         soup = BeautifulSoup(answer, features="lxml")
         answer_text = soup.find('div').get_text()
         keywords= hxs.xpath('//div[@class="w980 clearfix bc f12 btn-a pr"]/p[@class="pt10 pb10 lh180 znblue normal-a"]/a/text()').extract()[-2:]
-        yield XywyCrawlItem(answer=answer_text,question=first_question,same_question=question_list,keywords=keywords)
+        print(keywords)
+        # yield XywyCrawlItem(answer=answer_text,question=first_question,same_question=question_list,keywords=keywords)

@@ -6,7 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pandas as pd
 import csv
-
+from scrapy.exceptions import DropItem
 
 class XywyCrawlPipeline(object):
     def __init__(self):
@@ -19,14 +19,17 @@ class XywyCrawlPipeline(object):
         :param spider:  爬虫对象
         :return:
         """
-        # print(item["answer"])
-        # print(item["question"])
-        # print(item["same_question"])
-        # print(item["keywords"])
-        # sample = list([item["keywords"][0],item["keywords"][1],item["question"],item["answer"]]).extend(item["same_question"])
-        sample = [item["keywords"][0],item["keywords"][1],item["question"],item["answer"]]+item["same_question"]
-        self.f.writerow(sample)
-        # return item
+        if spider.name == "xywy":
+            # print(item["answer"])
+            # print(item["question"])
+            # print(item["same_question"])
+            # print(item["keywords"])
+            # sample = list([item["keywords"][0],item["keywords"][1],item["question"],item["answer"]]).extend(item["same_question"])
+            sample = [item["keywords"][0],item["keywords"][1],item["question"],item["answer"]]+item["same_question"]
+            self.f.writerow(sample)
+            # 将item传递给下一个pipeline的process_item方法
+            # return item
+        raise DropItem()  #截断传递数据
 
     @classmethod
     def from_crawler(cls, crawler):
