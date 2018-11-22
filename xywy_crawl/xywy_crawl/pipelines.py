@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+"""
+做数据持久化操作文件
+步骤一：注册item对象，将需要持久化的数据yiled 一个item 对象；
+步骤二：在settings中打开
+ITEM_PIPELINES = {
+   'xywy_crawl.pipelines.XywyCrawlPipeline': 300,
+}
+"""
 import pandas as pd
 import csv
 from scrapy.exceptions import DropItem
@@ -19,6 +23,7 @@ class XywyCrawlPipeline(object):
         :param spider:  爬虫对象
         :return:
         """
+        print(111)
         if spider.name == "xywy":
             # print(item["answer"])
             # print(item["question"])
@@ -48,7 +53,7 @@ class XywyCrawlPipeline(object):
         :param spider:
         :return:
         """
-        print('打开爬虫')
+        print('打开持久化')
         self.f = csv.writer(open("test.csv",'a+',encoding="gbk",newline=''),dialect="excel")
 
 
@@ -59,5 +64,5 @@ class XywyCrawlPipeline(object):
         :param spider:
         :return:
         """
-        print('关闭爬虫')
+        print('关闭持久化')
         self.f.close()

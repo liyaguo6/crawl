@@ -22,7 +22,6 @@ class XywySpider(scrapy.Spider):
     def parse1(self, response):
         # print(response.text)
         hxs = Selector(response=response)
-
         # cookie_jar = CookieJar()
         # cookie_jar.extract_cookies(response, response.request)
         url_list=hxs.xpath('//table[@class="f12 kstable"]//a[@class="btn-a hov_clor"]/@href').extract()
@@ -32,7 +31,7 @@ class XywySpider(scrapy.Spider):
                 method='GET',
                 # cookies=cookie_jar,
                 callback=self.parse2,
-                dont_filter=True,
+                dont_filter=False,
             )
         # url_page = hxs.xpath('//div[@class="bore4 pt10"]//a[@target="_self"]/@href').extract()
         # for url in url_page:
