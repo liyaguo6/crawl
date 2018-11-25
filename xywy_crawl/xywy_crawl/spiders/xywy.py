@@ -33,6 +33,7 @@ class XywySpider(scrapy.Spider):
                 callback=self.parse2,
                 dont_filter=False,
             )
+        print("#########################")
         # url_page = hxs.xpath('//div[@class="bore4 pt10"]//a[@target="_self"]/@href').extract()
         # for url in url_page:
         #     if url not in self.page_url_list:

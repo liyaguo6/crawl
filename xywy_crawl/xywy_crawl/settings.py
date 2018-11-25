@@ -58,25 +58,27 @@ ROBOTSTXT_OBEY = False
 #11 爬虫中间件
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    # 'xywy_crawl.middlewares.XywyCrawlSpiderMiddleware': 543,
-#    'xywy_crawl.middlewares.DownMiddleware1': 300,
+#    'xywy_crawl.middlewares.XywyCrawlSpiderMiddleware': 543,
+#    # 'xywy_crawl.middlewares.DownMiddleware1': 300,
 # }
 
 # Enable or disable downloader middlewares
 #12下载中间件
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'xywy_crawl.middlewares.DownMiddleware1': 543,
+#    # 'xywy_crawl.middlewares.DownMiddleware1': 543,
+#    'xywy_crawl.middlewares.ProxyMiddleware': 543,
+#
 # }
 
 
 #13自定义扩展，基于信号进行调用
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
-#    'xywy_crawl.extensions.MyExtension': 300,
-# }
-
+EXTENSIONS = {
+   'xywy_crawl.extends.MyExtension': 300,
+}
+VAR= 'liyaguo'
 
 
 # 13. 爬虫允许的最大深度，可以通过meta查看当前深度；0表示无深度
@@ -99,8 +101,8 @@ ROBOTSTXT_OBEY = False
 # from scrapy.core.scheduler import Scheduler
 
 # DUPEFILTER_CLASS = 'scrapy.dupefilters.RFPDupeFilter'
-
-DUPEFILTER_CLASS = 'xywy_crawl.dupefilters.WwwDupeFilter'  #自定义去重规则
+from scrapy.dupefilters import RFPDupeFilter
+DUPEFILTER_CLASS = 'xywy_crawl.rep.RepeatUrl'  #自定义去重规则
 
 
 
@@ -111,9 +113,9 @@ DUPEFILTER_CLASS = 'xywy_crawl.dupefilters.WwwDupeFilter'  #自定义去重规�
 
 # Configure item pipelines  定义pipeline处理请求
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'xywy_crawl.pipelines.XywyCrawlPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   'xywy_crawl.pipelines.XywyCrawlPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # 17. 自动限速算法
@@ -139,7 +141,6 @@ DUPEFILTER_CLASS = 'xywy_crawl.dupefilters.WwwDupeFilter'  #自定义去重规�
 
 # 18. 自定制命令
 COMMANDS_MODULE ="xywy_crawl.commands"
-
 """
 19. 代理，需要在环境变量中设置
     from scrapy.contrib.downloadermiddleware.httpproxy import HttpProxyMiddleware
@@ -187,7 +188,7 @@ COMMANDS_MODULE ="xywy_crawl.commands"
     }
 
 """
-
-DOWNLOADER_MIDDLEWARES = {
-   'xywy_crawl.middlewares.ProxyMiddleware': 500,
-}
+#
+# DOWNLOADER_MIDDLEWARES = {
+#    'xywy_crawl.middlewares.ProxyMiddleware': 500,
+# }
