@@ -8,7 +8,7 @@ def all_done(arg):
 
 
 def onedone(response):
-    print(response)
+    print(response.decode('utf-8')[:100])
 
 
 @defer.inlineCallbacks
@@ -18,8 +18,8 @@ def task():
     print(1)
     yield deferred2
 
-
-    deferred1 = getPage(bytes("http://www.google.com", encoding='utf8'))
+    print("##################")
+    deferred1 = getPage(bytes("http://www.github.com", encoding='utf8'))
     deferred1.addCallback(onedone)
     print(2)
     yield deferred1

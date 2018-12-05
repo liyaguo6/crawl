@@ -7,7 +7,7 @@ class ExecutionEngine(object):
         self.running_list = []
 
     def onedone(self,response,url):
-        print(response)
+        print(response.decode("utf-8")[:120])
         self.running_list.remove(url)
 
     def check_empty(self,response):
@@ -38,7 +38,7 @@ def all_done(arg):
     reactor.stop()
 
 if __name__ == '__main__':
-
+    url_list =["http://www.baidu.com","http://www.bing.com","http://www.google.com","http://www.github.com"]
     ret = task("http://www.baidu.com")
     ret.addBoth(all_done)
 

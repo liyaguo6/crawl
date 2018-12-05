@@ -9,7 +9,7 @@ def all_done(arg):
 
 def onedone(response):
     print("****"*20)
-    print(response)
+    print(response.decode('utf-8')[:120])
 
 
 @defer.inlineCallbacks
@@ -19,7 +19,8 @@ def task():
     yield deferred2
 
     stop_deferred = defer.Deferred()
-    stop_deferred.callback(None)
+    # stop_deferred.callback(None)
+    print(3)
     yield stop_deferred
 
 
